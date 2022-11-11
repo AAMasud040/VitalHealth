@@ -7,16 +7,16 @@ const handleNewUser = async (req, res) => {
     if (!name || !email || !pass || !phone || !address || !account)
         return res.status(400).json({ message: "Credentials are missing" });
     const prisma = new PrismaClient();
-    const duplicate = await prisma.user.count({
+    const duplicate = await prisma.users.count({
         where: {
             email: email,
         },
     });
-    if (duplicate != 0) return res.sendStatus(409);
+    if (duplicate!=0) return res.sendStatus(409);
 
     try {
         const hashedpwd = await bcrypt.hash(pass, 10);
-        const newUser = await prisma.user.create({
+        const newUser = await prisma.users.create({
             data: {
                 name: name,
                 email: email,
