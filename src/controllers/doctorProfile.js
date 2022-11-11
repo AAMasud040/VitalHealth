@@ -9,8 +9,24 @@ const getProfile = async (req, res) => {
                 id: id,
             },
         });
+        const userList = await prisma.users.findMany({
+            where: {
+                account: 2,
+            },
+            select: {
+                name: true,
+                id: true,
+                email: true,
+                phone: true,
+                address: true,
+                account: true,
+                infoSr: true,
+            },
+        });
+
         const { pass, ...userData } = user;
-        res.json({ userData });
+        
+        res.json({ userData, userList });
     } catch (err) {
         res.json({ Message: err });
     }
