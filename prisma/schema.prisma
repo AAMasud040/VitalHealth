@@ -23,5 +23,50 @@ model users{
     updatedAt DateTime @updatedAt
 }
 
+model info{
+  serial Int @id @default(autoincrement())
+  goalsforweightloss String @db.VarChar(255)
+  targetWeight Int
+  HistoryofHealthIssues String @db.Text
+  Motivation String @db.Text
+  foodforbreakfast String @db.Text
+  foodforlunch String @db.Text
+  foodfordinner String @db.Text
+  morningSnack String @db.Text
+  eveningSnack String @db.Text
+  nightSnacks String @db.Text
+  TimeforBreakfast DateTime
+  TimeforLunch DateTime
+  TimeforDinner DateTime
+  timeForMsnacks DateTime
+  timeForEsnacks DateTime
+  timeForNsnacks DateTime
+  glassesofWate Int
+  exercise String @db.Text
+}
 
-
+model regularInfo{
+  Serial Int @id @default(autoincrement())
+  SleepTime String @db.Text
+  BloodpressureMorning String @db.Text
+  weight Int
+  breakfast String @db.Text
+  b_time String @db.VarChar(255)
+  b_Water Int
+  morningSnacks String @db.Text
+  m_time String @db.VarChar(255)
+  m_Water Int
+  lunch String @db.Text
+  l_time String @db.VarChar(255)
+  l_Water Int
+  eveningSnacks String @db.Text
+  e_time String @db.VarChar(255)
+  e_Water Int
+  dinner String @db.Text
+  d_time String @db.VarChar(255)
+  d_Water Int
+  nightSnacks String @db.Text
+  n_time String @db.VarChar(255)
+  n_Water Int
+  BloodpressureEvening String @db.Text
+}
