@@ -4,7 +4,7 @@ const doctorprofile = require("../controllers/doctorProfile");
 
 const router = express.Router();
 
-router.post("/", doctorprofile.getProfile);
+router.get("/", doctorprofile.getProfile);
 
 //patient detail info
 
