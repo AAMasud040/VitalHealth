@@ -13,10 +13,7 @@ app.use("/register", require("./routes/register"));
 app.use("/login", require("./routes/login.js"));
 
 app.use(verifyJWT)
-app.get("/", (req, res) => {
-    console.log(req.id)
-    res.send("<h1>Hello</h1>");
-});
+app.use("/", require("./routes/doctorcredentials"));
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
