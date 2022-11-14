@@ -9,7 +9,7 @@ const getProfile = async (req, res) => {
         
         user = result[0];
 
-        sqlCommand = "SELECT name,email,phone,address,account,infoSr FROM drpatient INNER JOIN users ON users.serial=drpatient.patientSerial WHERE drSerial ="+id;
+        sqlCommand = "SELECT users.serial,name,email,phone,address,account,infoSr FROM drpatient INNER JOIN users ON users.serial=drpatient.patientSerial WHERE drSerial ="+id;
         let Patientresult = await query(sqlCommand)
 
         console.log(Patientresult);
