@@ -1,9 +1,10 @@
 const {query} = require("../helper/db");
 
 const storeInfo = async (req, res) => {
+    console.log(req.body);
     // insert into the table
     try{
-        let sqlCommand =  "INSERT INTO `info`(`goalwl`, `motivation`, `targetweight`, `healthproblemshistory`, `bfood`, `btime`, `msnacks`, `mtime`, `lfood`, `ltime`, `esnack`, `etime`, `dfood`, `dtime`, `nsnacks`, `ntime`, `glassesofwater`, `sleeptime`, `sleepTotal`, `exercise`, `currentwt`) VALUES ('"+req.goalwl+"','"+req.motivation+"',"+req.targetweight+",'"+req.healthproblemhistory+"','"+req.bfood+"','"+req.btime+"','"+req.msnacks+"','"+req.mtime+"','"+req.lfood+"','"+req.ltime+"','"+req.esnack+"','"+req.time+"','"+req.dfood+"','"+req.dtime+"','"+req.nsnacks+"','"+req.ntime+"','"+req.glassesofwater+"','"+req.sleeptime+"','"+req.sleeptotal+"','"+req.exercise+"',"+req.currentwt+")"
+        let sqlCommand =  "INSERT INTO `info`(`goalwl`, `motivation`, `targetweight`, `healthproblemshistory`, `bfood`, `btime`, `msnacks`, `mtime`, `lfood`, `ltime`, `esnack`, `etime`, `dfood`, `dtime`, `nsnacks`, `ntime`, `glassesofwater`, `sleeptime`, `sleepTotal`, `exercise`, `currentwt`) VALUES ('"+req.body.goalwl+"','"+req.body.motivation+"',"+req.body.targetweight+",'"+req.body.healthproblemhistory+"','"+req.body.bfood+"','"+req.body.btime+"','"+req.body.msnacks+"','"+req.body.mtime+"','"+req.body.lfood+"','"+req.body.ltime+"','"+req.body.esnack+"','"+req.body.etime+"','"+req.body.dfood+"','"+req.body.dtime+"','"+req.body.nsnacks+"','"+req.body.ntime+"','"+req.body.glassesofwater+"','"+req.body.sleeptime+"','"+req.body.sleeptotal+"','"+req.body.exercise+"',"+req.body.currentwt+")"
         let result = await query(sqlCommand);
 
         // get latest record
@@ -16,6 +17,7 @@ const storeInfo = async (req, res) => {
         
         res.json({Message: 'Successfully Added'})
     }catch(err){
+        console.log(err)
         res.json({ Message: err })
     }
 }   
