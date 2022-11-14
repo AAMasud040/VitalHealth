@@ -14,6 +14,7 @@ app.use("/login", require("./routes/login.js"));
 
 app.use(verifyJWT)
 app.use("/doctor-credentials", require("./routes/doctorcredentials"));
+app.use("/patient-info",  require("./routes/patientInfo"))
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

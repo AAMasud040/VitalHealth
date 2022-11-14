@@ -1,37 +1,30 @@
 const bcrypt = require("bcrypt");
-const {PrismaClient} = require("prisma/prisma-client");
+const {query} = require("../helper/db");
 
 const handleNewUser = async (req, res) => {
     console.log(req.body)
     const { name, email, pass, phone, address, account } = req.body;
     if (!name || !email || !pass || !phone || !address || !account)
         return res.status(400).json({ message: "Credentials are missing" });
-    const prisma = new PrismaClient();
-    const duplicate = await prisma.users.count({
-        where: {
-            email: email,
-        },
-    });
+
+    let sqlCommand = "SELECT COUNT(*)  AS c FROM users WHERE email = '" + email + "'";
+    let result = await query(sqlCommand);
+    let duplicate =  result[0].c;
+    
+    console.log(duplicate)
+
     if (duplicate!=0) return res.sendStatus(409);
 
     try {
         const hashedpwd = await bcrypt.hash(pass, 10);
-        const newUser = await prisma.users.create({
-            data: {
-                name: name,
-                email: email,
-                pass: hashedpwd,
-                phone: phone,
-                address: address,
-                account: account,
-                infoSr: 1,
-            },
-        });
-        console.log(newUser);
+        
+        let sqlCommand = "INSERT INTO `users`(`name`, `email`, `pass`, `phone`, `address`, `account`) VALUES ('"+name+"','"+email+"','"+hashedpwd+"','"+phone+"','"+address+"',"+account+")"
+        let result = await query(sqlCommand)
+
         res.status(201).json({ success: `New user ${name} created!` });
-        await prisma.$disconnect();
+
     } catch (err) {
-        await prisma.$disconnect();
+        
         res.status(500).json({ message: err.message });
     }
 };

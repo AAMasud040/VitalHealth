@@ -1,31 +1,23 @@
 const { PrismaClient } = require("prisma/prisma-client");
 
+const {query} = require("../helper/db");
+
 const getProfile = async (req, res) => {
     try {
         let id = req.id;
-        const prisma = new PrismaClient();
-        const user = await prisma.users.findUnique({
-            where: {
-                id: id,
-            },
-        });
-        const userList = await prisma.users.findMany({
-            where: {
-                account: 2,
-            },
-            select: {
-                name: true,
-                id: true,
-                email: true,
-                phone: true,
-                address: true,
-                account: true,
-                infoSr: true,
-            },
-        });
+        
+        let sqlCommand = "SELECT *  FROM users WHERE serial = '" + id + "'";
+        let result = await query(sqlCommand);
+        
+        user = result[0];
+
+        sqlCommand = "SELECT name,email,phone,address,account,infoSr FROM drpatient INNER JOIN users ON users.serial=drpatient.patientSerial WHERE drSerial ="+id;
+        let Patientresult = await query(sqlCommand)
+
+        console.log(Patientresult);
 
         const { pass, ...userData } = user;
-        
+        userList = Patientresult;
         res.json({ userData, userList });
     } catch (err) {
         res.json({ Message: err });
