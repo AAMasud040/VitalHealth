@@ -21,14 +21,14 @@ const handleLogin = async(req, res)=>{
     console.log(result[0].serial)
     if(match){
 
-        const {name,account, ...userData} = result[0] ;
+        const {name,account,infoSr, ...userData} = result[0] ;
 
         const accessToken = jwt.sign(
             { "id": result[0].serial },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '24h' }
         );
-        res.json({name, account, accessToken});
+        res.json({name, account, infoSr, accessToken});
     }else{
         res.sendStatus(401);
     }
