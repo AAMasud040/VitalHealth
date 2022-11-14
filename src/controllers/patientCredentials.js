@@ -12,11 +12,11 @@ const getProfile = async (req, res) => {
         let sqlCommand1 = "SELECT COUNT(*) as c FROM `regularinfo` WHERE cdate = CURDATE() AND userId="+id;
         result = await query(sqlCommand1);
 
+        // later needs to be updated with server time
         if(result[0].c>=0){
             let sqlCommand2 = "INSERT INTO `regularinfo`(`cdate`, `userId`) VALUES (CURDATE()," +id+ ")";
             result = await query(sqlCommand2);
         }
-        
 
         res.json({ userData});
 
