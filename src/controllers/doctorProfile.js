@@ -1,5 +1,3 @@
-const { PrismaClient } = require("prisma/prisma-client");
-
 const {query} = require("../helper/db");
 
 const getProfile = async (req, res) => {
