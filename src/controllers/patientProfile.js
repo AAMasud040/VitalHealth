@@ -1,42 +1,25 @@
-const { PrismaClient } = require("prisma/prisma-client");
+const {query} = require("../helper/db");
 
 const getProfile = async (req, res) => {
     try {
         let id = req.id;
-        const prisma = new PrismaClient();
-        
-        const patient = await prisma.users.findUnique({
-            where: {
-                id: id,
-            },
-            select: {
-                name: true,
-                id: true,
-                email: true,
-                phone: true,
-                address: true,
-                account: true,
-                infoSr: true,
-            },
-        });
-        
-        const userList = await prisma.users.findUnique({
-            where: {
-                id: id,
-            },
-            select: {
-                name: true,
-                id: true,
-                email: true,
-                phone: true,
-                address: true,
-                account: true,
-                infoSr: true,
-            },
-        });
+        let sqlCommand = "SELECT *  FROM users WHERE serial = '" + id + "'";
+        let result = await query(sqlCommand);
+        user = result[0];
+
         const { pass, ...userData } = user;
+
+        let sqlCommand1 = "SELECT COUNT(*) as c FROM `regularinfo` WHERE cdate = CURDATE() AND userId="+id;
+        result = await query(sqlCommand1);
+
+        if(result[0].c>=0){
+            let sqlCommand2 = "INSERT INTO `regularinfo`(`cdate`, `userId`) VALUES (CURDATE()," +id+ ")";
+            result = await query(sqlCommand2);
+        }
         
-        res.json({ userData, userList });
+
+        res.json({ userData});
+
     } catch (err) {
         res.json({ Message: err });
     }
