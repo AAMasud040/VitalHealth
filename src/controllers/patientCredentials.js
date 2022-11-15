@@ -18,7 +18,12 @@ const getProfile = async (req, res) => {
             result = await query(sqlCommand2);
         }
 
-        res.json({ userData});
+        sqlCommand1 = "SELECT * FROM `regularinfo` WHERE cdate = CURDATE() AND userId="+id;
+        result = await query(sqlCommand1);
+
+        todaysInfo = result[0]
+
+        res.json({ userData, todaysInfo});
 
     } catch (err) {
         res.json({ Message: err });
